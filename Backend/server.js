@@ -10,6 +10,8 @@ const mongoUri = process.env.MONGO_URI;
 
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth', require('./routes/auth'));
+app.use('/api/sos', require('./routes/sos'));
 
 app.get('/', (req, res) => {
 	res.json({ message: 'Backend is running' });
