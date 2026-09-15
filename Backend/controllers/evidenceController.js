@@ -1,4 +1,5 @@
 const EvidenceReport = require('../models/EvidenceReport');
+const { reconcileNewReport } = require('../services/caderfEngine');
 
 async function submitSOS(req, res) {
     try {
@@ -8,7 +9,7 @@ async function submitSOS(req, res) {
             return res.status(400).json({ message: 'location and evidenceType are required' });
         }
 
-        const report = await EvidenceReport.create({
+        let report = await EvidenceReport.create({
             source: req.user.role,
             submittedBy: req.user.id,
             location,
@@ -18,7 +19,10 @@ async function submitSOS(req, res) {
             status: 'Pending'
         });
 
-        res.status(201).json({ message: 'SOS submitted', report });
+        const incident = await reconcileNewReport(report._id);
+        report = await EvidenceReport.findById(report._id);
+
+        res.status(201).json({ message: 'SOS submitted', report, incident });
     } catch (err) {
         res.status(500).json({ message: err.message });
     }

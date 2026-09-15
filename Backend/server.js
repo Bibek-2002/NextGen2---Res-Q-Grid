@@ -14,6 +14,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/sos', require('./routes/sos'));
 app.use('/api', require('./routes/updates'));
 app.use('/api/knowledge', require('./routes/knowledge'));
+app.use('/api/incidents', require('./routes/incidents'));
 
 app.get('/', (req, res) => {
 	res.json({ message: 'Backend is running' });

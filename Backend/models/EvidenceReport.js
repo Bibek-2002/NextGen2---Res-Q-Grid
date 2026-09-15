@@ -11,7 +11,7 @@ const evidenceReportSchema = new mongoose.Schema({
     evidenceType: { type: String, enum: ['Rescue', 'Food', 'Water', 'Medicine', 'Medical'], required: true },
     description: String,
     mediaURL: String,
-    status: { type: String, enum: ['Pending', 'Reconciled', 'Duplicate'], default: 'Pending' },
+    status: { type: String, enum: ['Pending', 'Reconciled', 'Duplicate', 'Conflicting'], default: 'Pending' },
     linkedIncident: { type: mongoose.Schema.Types.ObjectId, ref: 'Incident' }
 }, { timestamps: true });
 
