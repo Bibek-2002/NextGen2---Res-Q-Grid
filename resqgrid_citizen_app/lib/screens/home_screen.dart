@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'sos_form_screen.dart';
+import 'status_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String token;
@@ -18,7 +19,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Hi, $userName')),
+      appBar: AppBar(
+        title: Text('Hi, $userName'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.list_alt),
+            tooltip: 'My Reports',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => StatusScreen(token: token),
+              ),
+            ),
+          ),
+        ],
+      ),
       body: GridView.count(
         padding: const EdgeInsets.all(16),
         crossAxisCount: 2,
@@ -29,10 +44,12 @@ class HomeScreen extends StatelessWidget {
             child: InkWell(
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => SosFormScreen(
+                MaterialPageRoute(
+                  builder: (_) => SosFormScreen(
                     token: token,
                     evidenceType: need['label'] as String,
-                  )),
+                  ),
+                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

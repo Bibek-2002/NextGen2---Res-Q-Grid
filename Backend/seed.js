@@ -8,6 +8,7 @@ const Incident = require('./models/Incident');
 const LocalKnowledge = require('./models/LocalKnowledge');
 const ResourceInventory = require('./models/ResourceInventory');
 
+
 async function seed() {
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDB for seeding...');

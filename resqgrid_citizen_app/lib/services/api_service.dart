@@ -33,4 +33,14 @@ class ApiService {
     );
     return jsonDecode(res.body);
   }
+
+  static Future<List<dynamic>> getMyReports(String token) async {
+    final res = await http
+        .get(
+          Uri.parse('${AppConfig.baseUrl}/sos/my-reports'),
+          headers: {'Authorization': 'Bearer $token'},
+        )
+        .timeout(const Duration(seconds: 10));
+    return jsonDecode(res.body);
+  }
 }
