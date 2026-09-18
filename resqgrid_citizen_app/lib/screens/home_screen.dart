@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'knowledge_screen.dart';
 import 'sos_form_screen.dart';
 import 'status_screen.dart';
 
@@ -29,6 +30,16 @@ class HomeScreen extends StatelessWidget {
               context,
               MaterialPageRoute(
                 builder: (_) => StatusScreen(token: token),
+              ),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.menu_book),
+            tooltip: 'Local Knowledge',
+            onPressed: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => KnowledgeScreen(token: token),
               ),
             ),
           ),

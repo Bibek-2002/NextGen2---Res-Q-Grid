@@ -43,4 +43,15 @@ class ApiService {
         .timeout(const Duration(seconds: 10));
     return jsonDecode(res.body);
   }
+
+  static Future<List<dynamic>> getKnowledge(String token, {String? village}) async {
+    final uri = village != null
+        ? Uri.parse('${AppConfig.baseUrl}/knowledge?village=$village')
+        : Uri.parse('${AppConfig.baseUrl}/knowledge');
+    final res = await http.get(
+      uri,
+      headers: {'Authorization': 'Bearer $token'},
+    ).timeout(const Duration(seconds: 10));
+    return jsonDecode(res.body);
+  }
 }
