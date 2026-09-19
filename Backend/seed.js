@@ -39,6 +39,14 @@ async function seed() {
         name: 'NDRF Team 1', phone: '9000000004', password: hashedPassword,
         role: 'RescueTeam', location: { lat: 22.9860, lng: 87.8540 }
     });
+    const ngo = await User.create({
+        name: 'Relief NGO', phone: '9000000005', password: hashedPassword,
+        role: 'NGO', location: { lat: 22.9875, lng: 87.8565 }
+    });
+    const camp = await User.create({
+        name: 'Balarampur Relief Camp', phone: '9000000006', password: hashedPassword,
+        role: 'Camp', location: { lat: 22.9855, lng: 87.8535 }
+    });
 
     // Incident
     const incident = await Incident.create({
