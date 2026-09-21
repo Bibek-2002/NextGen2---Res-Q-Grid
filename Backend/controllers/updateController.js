@@ -84,4 +84,13 @@ async function campStatusUpdate(req, res) {
     }
 }
 
-module.exports = { volunteerUpdate, hospitalUpdate, ngoInventoryUpdate, campStatusUpdate };
+async function getAllResources(req, res) {
+    try {
+        const resources = await ResourceInventory.find().populate('ownerId', 'name role');
+        res.status(200).json(resources);
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+}
+
+module.exports = { volunteerUpdate, hospitalUpdate, ngoInventoryUpdate, campStatusUpdate, getAllResources };
