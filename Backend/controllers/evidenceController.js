@@ -22,6 +22,9 @@ async function submitSOS(req, res) {
         const incident = await reconcileNewReport(report._id);
         report = await EvidenceReport.findById(report._id);
 
+        const io = req.app.get('io');
+        io.emit('incident-updated', incident);
+
         res.status(201).json({ message: 'SOS submitted', report, incident });
     } catch (err) {
         res.status(500).json({ message: err.message });
