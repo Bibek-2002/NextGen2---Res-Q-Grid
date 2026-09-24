@@ -2,6 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { useNavigate } from 'react-router-dom';
 import { getIncidents, getResources } from '../services/api';
+import { io } from 'socket.io-client';
+import { API_BASE_URL } from '../config';
 import L from 'leaflet';
 import 'leaflet.heat';
 
@@ -76,6 +78,27 @@ export default function Dashboard() {
         void Promise.resolve().then(loadIncidents);
         void Promise.resolve().then(loadResources);
     }, [loadIncidents, loadResources, navigate, token]);
+
+    useEffect(() => {
+        if (!token) return undefined;
+
+        const socketUrl = API_BASE_URL.replace('/api', '');
+        const socket = io(socketUrl);
+
+        socket.on('incident-updated', (updatedIncident) => {
+            setIncidents((previousIncidents) => {
+                const exists = previousIncidents.some((incident) => incident._id === updatedIncident._id);
+                if (exists) {
+                    return previousIncidents.map((incident) => (
+                        incident._id === updatedIncident._id ? updatedIncident : incident
+                    ));
+                }
+                return [updatedIncident, ...previousIncidents];
+            });
+        });
+
+        return () => socket.disconnect();
+    }, [token]);
 
     function handleLogout() {
         localStorage.clear();
